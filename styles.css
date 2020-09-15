@@ -1,0 +1,189 @@
+@font-face {
+    font-family: 'btse__ps2_fontregular';
+    src: url('fonts/btseps2-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'ds-digitalbold';
+    src: url('fonts/ds-dgib-webfont.woff2') format('woff2'),
+         url('fonts/ds-dgib-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+html {
+    background-color: #232425; 
+}
+
+#wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+    }
+
+#calculator-body {
+    font-family: btse__ps2_fontregular;
+    font-size: 20px;
+    height: 440px;
+    width: 300px;
+    border-bottom: solid #777777 3px;
+    border-right: solid #777777 3px;
+    border-radius: 15px;
+    background-color: #8f8f8f;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 130px 40px auto;
+    justify-items: center;
+}
+
+#display {
+    font-family: ds-digitalbold;
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+    background-color: rgb(156, 160, 132);
+    border: solid #232425 15px;
+    font-size: 40px;
+    margin-top: 30px;
+    padding-right: 10px;
+    position: relative;
+}
+
+#display > p  {
+    position: absolute;
+    bottom: -40px;
+    right: 5px;
+}
+
+#product-name {
+    width: 200px;
+}
+
+
+#button-container {
+    height: 200px;
+    width: 200px;
+    border-radius: 10px;
+    border-top: solid #8a8a8a 2px;
+    border-left: solid #8a8a8a 2px;
+    background-color: #a0a0a0;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-gap: 5px;
+    grid-template-areas: 
+      "clear1 backspace blank-spot blank-spot"
+      "seven eight nine divide"
+      "four five six multiply"
+      "one two three minus"
+      "zero decimal equals plus";
+}
+
+
+.button {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #adadad;
+    border-radius: 5px;
+    border-top: solid #9c9c9c 1px;
+    border-left: solid #9c9c9c 1px;
+    box-shadow: 2px 2px #808080;
+    text-align: center;
+}
+
+
+
+
+#clear {
+    grid-area: "clear1";
+    background-color: #969696;
+}
+
+#backspace {
+    grid-area: "backspace";
+    background-color: #969696;
+}
+
+#blank-spot {
+    grid-area: "blank-spot";
+    background-color: #a0a0a0;
+    border: none;
+    box-shadow: none;
+}
+
+#one {
+    grid-area: one;
+}
+
+#two {
+    grid-area: two;
+}
+
+#three {
+    grid-area: three;
+}
+
+#four {
+    grid-area: four;
+}
+
+#five {
+    grid-area: five;
+}
+
+#six {
+    grid-area: six;
+}
+
+#seven {
+    grid-area: seven;
+}
+
+#eight{
+    grid-area: eight;
+}
+
+#nine {
+    grid-area: nine;
+}
+
+#zero {
+    grid-area: zero;
+}
+
+#decimal {
+    grid-area: decimal;
+}
+
+#plus {
+    grid-area: plus;
+    background-color: #969696;
+}
+
+#minus {
+    grid-area: minus;
+    background-color: #969696;
+}
+
+#divide {
+    grid-area: divide;
+    background-color: #969696;
+}
+
+#multiply {
+    grid-area: multiply;
+    background-color: #969696;
+}
+
+#equals {
+    grid-area: equals;
+    background-color: #969696;
+}
