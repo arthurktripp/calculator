@@ -30,7 +30,7 @@ const writeString = function() {
             if (secondString.length <= 9){
                 firstString = answer.toString();
                 firstNum = answer;
-                secondString += key;
+                if (key.length < 2) {secondString += key};
                 secondNum = parseFloat(secondString);
                 break;
             } else {break};
@@ -40,7 +40,7 @@ const writeString = function() {
 // UPDATES THE CALCULATOR DISPLAY TO REFLECT CURRENT NUMBER
 const updateDisplay = function() {
     if (operandItteration == 1) {
-        if (displayLength < 9) { 
+        if (displayLength <= 9) { 
             displayValue = parseFloat(firstString);
             if (displayValue == Math.floor(displayValue)) {
                 document.getElementById("readout").innerHTML = (displayValue + '.');
@@ -51,7 +51,7 @@ const updateDisplay = function() {
             displayLength = x.length;
        } 
     } else if (operandItteration == 2) {
-        if (displayLength < 9) {
+        if (displayLength <= 9) {
             displayValue = parseFloat(secondString);
             if (displayValue == Math.floor(displayValue)) {
                 document.getElementById("readout").innerHTML = (displayValue + '.');
@@ -62,7 +62,7 @@ const updateDisplay = function() {
             displayLength = x.length;
         }
         } else if (operandItteration == 3) {
-            if (displayLength < 9) {
+            if (displayLength <= 9) {
                 displayValue = parseFloat(firstString);
                 if (displayValue == Math.floor(displayValue)) {
                     document.getElementById("readout").innerHTML = (displayValue + '.');
@@ -117,7 +117,7 @@ const plusKey = document.getElementById('plus').addEventListener("click",
             case 3:
                 if (key == 'equals') {
                     secondNum = 0;
-                    secondString = 0;
+                    secondString = '0';
                 }
                 operator = '+'
                 calculate();
@@ -131,6 +131,127 @@ const plusKey = document.getElementById('plus').addEventListener("click",
         }
     });
 
+
+// MINUS KEY
+const minusKey = document.getElementById('minus').addEventListener("click",
+    function() {
+        switch (operandItteration) {
+            case 1:
+                operator = '-';
+                operandItteration = 2;
+                break;
+            case 2:
+                operator = '-'
+                calculate();
+                firstString = answer.toString();
+                secondNum = 0;
+                secondString = '0';
+                operandItteration = 3;
+                writeString();
+                updateDisplay();
+                break;
+            case 3:
+                if (key == 'equals') {
+                    secondNum = 0;
+                    secondString = '0';
+                }
+                operator = '-'
+                calculate();
+                firstString = answer.toString();
+                firstNum = answer;
+                secondNum = 0;
+                secondString = '0';
+                writeString();
+                updateDisplay();
+                break;
+        }
+    });
+
+
+// MULTIPLY KEY
+const multiplyKey = document.getElementById('multiply').addEventListener("click",
+    function() {
+        switch (operandItteration) {
+            case 1:
+                operator = '*';
+                operandItteration = 2;
+                break;
+            case 2:
+                operator = '*'
+                calculate();
+                firstString = answer.toString();
+                secondNum = 0;
+                secondString = '0';
+                operandItteration = 3;
+                writeString();
+                updateDisplay();
+                break;
+            case 3:
+                if (key == 'equals') {
+                    secondNum = 1;
+                    secondString = '1';
+                }
+                operator = '*'
+                calculate();
+                firstString = answer.toString();
+                firstNum = answer;
+                secondNum = 0;
+                secondString = '0';
+                writeString();
+                updateDisplay();
+                break;
+        }
+    });
+
+
+// DIVIDE KEY
+const divideKey = document.getElementById('divide').addEventListener("click",
+    function() {
+        switch (operandItteration) {
+            case 1:
+                operator = '/';
+                operandItteration = 2;
+                break;
+            case 2:
+                operator = '/'
+                calculate();
+                firstString = answer.toString();
+                secondNum = 0;
+                secondString = '0';
+                operandItteration = 3;
+                if (answer == "Infinity") {
+                    document.getElementById("readout").innerHTML = ("GET REAL");
+                } else {
+                    writeString();
+                    updateDisplay();
+                    break;
+                }
+            case 3:
+                if (key == 'equals') {
+                    secondNum = 1;
+                    secondString = '1';
+                }
+                operator = '/'
+                calculate();
+                firstString = answer.toString();
+                firstNum = answer;
+                secondNum = 0;
+                secondString = '0';
+                if (answer == "Infinity") {
+                    document.getElementById("readout").innerHTML = ("GET REAL");
+                } else {
+                    writeString();
+                    updateDisplay();
+                    break;
+                };
+        }
+    });
+
+
+
+
+
+
 // EQUALS KEY
 const equalsKey = document.getElementById('equals').addEventListener("click",
     function() {
@@ -142,17 +263,26 @@ const equalsKey = document.getElementById('equals').addEventListener("click",
                 firstString = 0 + answer.toString();
                 key = 'equals'
                 operandItteration = 3;
-                writeString();
-                updateDisplay();
-                break;
+                if (answer == "Infinity") {
+                    document.getElementById("readout").innerHTML = ("GET REAL");
+                } else {
+                    writeString();
+                    updateDisplay();
+                    break;
+                }
             case 3:
                 calculate();
                 firstString = 0 + answer.toString();
+                firstNum = answer;
                 key = 'equals'
                 operandItteration = 3;
-                writeString();
-                updateDisplay();
-                break;
+                if (answer == "Infinity") {
+                    document.getElementById("readout").innerHTML = ("GET REAL");
+                } else {
+                    writeString();
+                    updateDisplay();
+                    break;
+                }
         }
     })
 
@@ -162,20 +292,28 @@ const calculate = function() {
     switch (operator) {
         case '+':
             answer = firstNum + secondNum;
+            return answer;
             break;
         case "-":
-            answer = firstNum - secondNum;
+            answer = firstNum + (secondNum * -1);
+            return answer;
             break;
         case "*":
             answer = firstNum * secondNum;
+            return answer;
             break;
-        case "/": // Needs an out if secondNum is zero
+        case "/": 
             answer = firstNum / secondNum;
+            if (answer === Infinity) {
+                break;
+            } else {
+            return answer
+        };
             break;
         default:
             answer = "That's not right" 
-    }
-    return answer;
+    };
+    
 }
 
 
