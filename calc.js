@@ -13,6 +13,14 @@ var answer = 0;
 
 // STORES INPUT AS ONE OF TWO STRINGS
 const writeString = function() {
+    if (key == "del" && operandItteration == (1 || 3)) {
+        firstString = firstString.slice(0, -1);
+        key = '';
+    } else if (key == "del" && operandItteration == 2){
+        secondString = secondString.slice(0, -1);
+        key = '';
+    }
+    
     switch (operandItteration) {
         case 1:
             if (firstString.length <= 9){
@@ -28,7 +36,7 @@ const writeString = function() {
             } else {break};
         case 3:
             if (secondString.length <= 9){
-                firstString = answer.toString();
+                firstString = answer.toString().slice(0, 10);
                 firstNum = answer;
                 if (key.length < 2) {secondString += key};
                 secondNum = parseFloat(secondString);
@@ -234,7 +242,6 @@ const divideKey = document.getElementById('divide').addEventListener("click",
                 operator = '/'
                 calculate();
                 firstString = answer.toString();
-                firstNum = answer;
                 secondNum = 0;
                 secondString = '0';
                 if (answer == "Infinity") {
@@ -246,10 +253,6 @@ const divideKey = document.getElementById('divide').addEventListener("click",
                 };
         }
     });
-
-
-
-
 
 
 // EQUALS KEY
@@ -317,7 +320,13 @@ const calculate = function() {
 }
 
 
-
+// DELETE KEY
+const deleteKey = document.getElementById('backspace').addEventListener("click",
+    function() {
+        key = 'del';
+        writeString();
+        updateDisplay();
+    });
 
 
 
@@ -334,7 +343,7 @@ const zeroKey = document.getElementById("zero").addEventListener("click",
             operandItteration = 2;
         }
         writeString();
-        updateDisplay()
+        updateDisplay();
     });
 
 const oneKey = document.getElementById("one").addEventListener("click",
@@ -444,3 +453,18 @@ const decimalKey = document.getElementById('decimal').addEventListener("click",
         }
     });
     
+
+// EVENT LISTENER FOR VISUAL FEEDBAK ON BUTTON PRESS
+
+
+document.addEventListener('mousedown', function (event) {
+    if ( event.target.classList.contains( 'button' ) ) {
+        event.target.classList = "press";
+    }
+}, false);
+
+document.addEventListener('mouseup', function (event) {
+    if ( event.target.classList.contains( 'press' ) ) {
+        event.target.classList = "button";
+    }
+}, false);
