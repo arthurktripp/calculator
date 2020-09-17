@@ -9,7 +9,8 @@ var x = 0;
 var displayLength = 0;
 var displayValue;
 var answer = 0;
-
+var numberKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+var operators = ["enter", "=", "+", "-", "/", "*"];
 
 // STORES INPUT AS ONE OF TWO STRINGS
 const writeString = function() {
@@ -123,7 +124,7 @@ const plusKey = document.getElementById('plus').addEventListener("click",
                 updateDisplay();
                 break;
             case 3:
-                if (key == 'equals') {
+                if (key == '=') {
                     secondNum = 0;
                     secondString = '0';
                 }
@@ -159,7 +160,7 @@ const minusKey = document.getElementById('minus').addEventListener("click",
                 updateDisplay();
                 break;
             case 3:
-                if (key == 'equals') {
+                if (key == '=') {
                     secondNum = 0;
                     secondString = '0';
                 }
@@ -195,7 +196,7 @@ const multiplyKey = document.getElementById('multiply').addEventListener("click"
                 updateDisplay();
                 break;
             case 3:
-                if (key == 'equals') {
+                if (key == '=') {
                     secondNum = 1;
                     secondString = '1';
                 }
@@ -235,7 +236,7 @@ const divideKey = document.getElementById('divide').addEventListener("click",
                     break;
                 }
             case 3:
-                if (key == 'equals') {
+                if (key == '=') {
                     secondNum = 1;
                     secondString = '1';
                 }
@@ -264,7 +265,7 @@ const equalsKey = document.getElementById('equals').addEventListener("click",
             case 2:
                 calculate();
                 firstString = 0 + answer.toString();
-                key = 'equals'
+                key = '='
                 operandItteration = 3;
                 if (answer == "Infinity") {
                     document.getElementById("readout").innerHTML = ("GET REAL");
@@ -277,7 +278,7 @@ const equalsKey = document.getElementById('equals').addEventListener("click",
                 calculate();
                 firstString = 0 + answer.toString();
                 firstNum = answer;
-                key = 'equals'
+                key = '='
                 operandItteration = 3;
                 if (answer == "Infinity") {
                     document.getElementById("readout").innerHTML = ("GET REAL");
@@ -334,7 +335,7 @@ const deleteKey = document.getElementById('backspace').addEventListener("click",
 
 
 
-// eventlisteners for the number keys
+// eventlisteners for the number button clicks
 const zeroKey = document.getElementById("zero").addEventListener("click",
     function() { 
         key = this.dataset.key;
@@ -454,9 +455,7 @@ const decimalKey = document.getElementById('decimal').addEventListener("click",
     });
     
 
-// EVENT LISTENER FOR VISUAL FEEDBAK ON BUTTON PRESS
-
-
+// EVENT LISTENERS FOR VISUAL FEEDBAK ON BUTTON PRESS
 document.addEventListener('mousedown', function (event) {
     if ( event.target.classList.contains( 'button' ) ) {
         event.target.classList = "press";
@@ -468,3 +467,205 @@ document.addEventListener('mouseup', function (event) {
         event.target.classList = "button";
     }
 }, false);
+
+/*
+window.addEventListener('keydown', function(e){
+    const keyboard = document.querySelector(`div[data-key="${e.key}"]`);
+    if (!keyboard) {
+        return;
+    } console.log(keyboard.dataset.key)
+
+
+    }
+})
+*/
+
+
+const numKeyboard = window.addEventListener('keydown', function(e){
+    key = e.key;
+    if (numberKeys.includes(key)) {
+        if (operandItteration == 3){
+            secondString = '';
+            operandItteration = 2;
+        };
+    writeString();
+    updateDisplay();
+    }
+});
+
+const plusMinusKeyboard = window.addEventListener('keydown', function(e){
+    if ( (e.key !== "+") && (e.key !== "-") ) {return}
+    switch (operandItteration) {
+        case 1:
+            operator = e.key;
+            operandItteration = 2;
+            break;
+        case 2:
+            operator = e.key;
+            calculate();
+            firstString = answer.toString();
+            secondNum = 0;
+            secondString = '0';
+            operandItteration = 3;
+            writeString();
+            updateDisplay();
+            break;
+        case 3:
+            if (key == "=" ) {
+                secondNum = 0;
+                secondString = '0';
+            }
+            operator = e.key;
+            calculate();
+            firstString = answer.toString();
+            firstNum = answer;
+            secondNum = 0;
+            secondString = '0';
+            writeString();
+            updateDisplay();
+            break;
+    }
+});
+
+const multiplyKeyboard = window.addEventListener('keydown', function(e){
+    if ( e.key !== "*" ) return
+        switch (operandItteration) {
+            case 1:
+                operator = '*';
+                operandItteration = 2;
+                break;
+            case 2:
+                operator = '*'
+                calculate();
+                firstString = answer.toString();
+                secondNum = 0;
+                secondString = '0';
+                operandItteration = 3;
+                writeString();
+                updateDisplay();
+                break;
+            case 3:
+                if (key == '=') {
+                    secondNum = 1;
+                    secondString = '1';
+                }
+                operator = '*'
+                calculate();
+                firstString = answer.toString();
+                firstNum = answer;
+                secondNum = 0;
+                secondString = '0';
+                writeString();
+                updateDisplay();
+                break;
+        }
+    })
+
+const divideqKeyboard = window.addEventListener('keydown', function(e){
+    if ( e.key !== "/" ) return
+    switch (operandItteration) {
+        case 1:
+            operator = '/';
+            operandItteration = 2;
+            break;
+        case 2:
+            operator = '/'
+            calculate();
+            firstString = answer.toString();
+            secondNum = 0;
+            secondString = '0';
+            operandItteration = 3;
+            if (answer == "Infinity") {
+                document.getElementById("readout").innerHTML = ("GET REAL");
+            } else {
+                writeString();
+                updateDisplay();
+                break;
+            }
+        case 3:
+            if (key == '=') {
+                secondNum = 1;
+                secondString = '1';
+            }
+            operator = '/'
+            calculate();
+            firstString = answer.toString();
+            secondNum = 0;
+            secondString = '0';
+            if (answer == "Infinity") {
+                document.getElementById("readout").innerHTML = ("GET REAL");
+            } else {
+                writeString();
+                updateDisplay();
+                break;
+            };
+    }
+});
+
+const equalsKeyboard = window.addEventListener('keydown', function(e) {
+    if ( (e.key !== '=') && (e.key !== "Enter") ) return
+    switch (operandItteration) {
+        case 1:
+            break;
+        case 2:
+            calculate();
+            firstString = 0 + answer.toString();
+            key = '='
+            operandItteration = 3;
+            if (answer == "Infinity") {
+                document.getElementById("readout").innerHTML = ("GET REAL");
+            } else {
+                writeString();
+                updateDisplay();
+                break;
+            }
+        case 3:
+            calculate();
+            firstString = 0 + answer.toString();
+            firstNum = answer;
+            key = '='
+            operandItteration = 3;
+            if (answer == "Infinity") {
+                document.getElementById("readout").innerHTML = ("GET REAL");
+            } else {
+                writeString();
+                updateDisplay();
+                break;
+            }
+    }
+})
+
+const decimalKeyboard = window.addEventListener('keydown', function(e) {
+    if ( e.key !== '.') return
+    if ( (operandItteration == 1 && (firstString.indexOf('.') >= 0) ) || (operandItteration == 2 && secondString.indexOf('.') >= 0) ) {
+        return; //kills decimal key once it has been used in current number
+    } else {
+    key = e.key;
+    if (operandItteration == 3){
+        secondString = '';
+        operandItteration = 2;
+    }
+    writeString();
+    updateDisplay()
+    }
+});
+
+const backspaceKeyboard = window.addEventListener('keydown', function(e) {
+    if (e.key !== "Backspace") return;
+    key = 'del';
+    writeString();
+    updateDisplay();
+});
+
+const clearKeyboard = window.addEventListener('keydown', function(e) {
+    if ( (e.key !== "Clear" ) && ( e.key !== "Escape" ) ) return;
+    firstString = "0";
+        secondString = "0";
+        operandItteration = 1;
+        firstNum = 0;
+        secondNum = 0;
+        x = 0;
+        displayLength = 0;
+        displayValue;
+        updateDisplay();
+    });
